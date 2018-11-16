@@ -12,14 +12,19 @@ class table(object):
                 stream = f.read()
         except FileNotFoundError as E:
             raise FileNotFoundError('No such path: {}'.format(p))
-
-        stream = stream.split('\n')  # split the file by line
+           
+        stream = stream.strip('\n').split('\n')  # split the file by line, after removing trailing whitespace
         
-        form = stream[0].split(',')  # split the first line by comma and add into the form variable
+        self.form = stream[0].split(',')  # split the first line by comma and add into the form variable
 
-        
+        for i in range(len(self.form)):  # remove white space from the feild headings
+            self.form[i] = self.form[i].strip(' ')
 
-        
+        stream = stream[1:]  # remove the format string from the string
+
+        for i in range(len(stream)):  # for each row in string, split by commas and append to content
+            self.content.append(stream[i].split(','))
+
 
 
     def new(self, f, p):  # creates a new CSV file with the format row f filled in at path p
@@ -49,3 +54,6 @@ class table(object):
     
 t = table()
 t.read_table('test.txt')
+print(t.form)
+for i in t.content:
+    print(i)
