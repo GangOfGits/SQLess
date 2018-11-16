@@ -1,7 +1,16 @@
 # SQLess Main Library file
+from json import loads, dumps
+
+class Database(object):
+
+    def __init__(self, dbfile):
+        with open(dbfile, "r") as file:
+            file = file.read()
+            self.jsondata = loads(file)
+            print(self.jsondata)
 
 #A class fo using tables
-class table(object):
+class Table(object):
     path = ''  # the location of a CSV file
     form = []  # the format of the CSV file (eg. ID, name, DoB,)
     content = [] # a 2d array, will be filled with sub arrays, each ub array is a row
@@ -50,10 +59,12 @@ class table(object):
 
     def save(self, p = path):  # save the current table at the path p 
         pass
+
+Database("database.json")
     
-    
-t = table()
-t.read_table('test.txt')
-print(t.form)
-for i in t.content:
-    print(i)
+##    
+##t = table()
+##t.read_table('test.txt')
+##print(t.form)
+##for i in t.content:
+##    print(i)
